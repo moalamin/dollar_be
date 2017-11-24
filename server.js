@@ -8,7 +8,7 @@ const PORT = (process.env.PORT || 3500);
 var stripe = require('stripe')(config.STRIPE_TEST_KEY);
 
 //cors options
-var whitelist = ['http://localhost:3000', 'ec2-34-216-18-186.us-west-2.compute.amazonaws.com:3500']
+var whitelist = ['http://localhost:3000', 'ec2-34-216-18-186.us-west-2.compute.amazonaws.com']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
