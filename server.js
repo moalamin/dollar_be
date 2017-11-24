@@ -12,9 +12,10 @@ var whitelist = ['http://localhost:3000', 'ec2-34-216-18-186.us-west-2.compute.a
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
+      callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'))
+      console.log(origin);
+      callback(new Error('Not allowed by CORS'));
     }
   }
 }
