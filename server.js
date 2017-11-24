@@ -1,8 +1,10 @@
+let config = require('./config.js');
 let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
 let morgan = require('morgan');
 const PORT = (process.env.PORT || 3500);
+var stripe = require('stripe')(config.STRIPE_TEST_KEY);
 
 //middleware
 // parse application/x-www-form-urlencoded
@@ -24,10 +26,14 @@ app.post('/api/charge', (req, res) => {
       description: "Someone waster a dollar.",
       source: token,
     }, function(err, charge) {
-      // asynchronously called
+      if (err) {
+        next(error)
+      } else {
+        res.json(charge);
+      }
     });
-})
+});
 
-app.listen(PORT, ()=> {
+app.listen(PORT, () => {
     console.log('App is now running on port: ' + PORT)
-};
+})
