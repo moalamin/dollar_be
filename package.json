@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "forever start -l LOGFILE server.js",
+    "start": "forever start -a LOGFILE server.js",
     "start:dev": "forever -w server.js",
     "ssh": "ssh -i ~/.ssh/dollar.pem ubuntu@ec2-34-216-18-186.us-west-2.compute.amazonaws.com"
   },
