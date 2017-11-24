@@ -7,9 +7,20 @@ let morgan = require('morgan');
 const PORT = (process.env.PORT || 3500);
 var stripe = require('stripe')(config.STRIPE_TEST_KEY);
 
+//cors options
+var whitelist = ['http://localhost:3000']
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
 //middleware
-// parse application/x-www-form-urlencoded
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 app.use(morgan('combined'));
