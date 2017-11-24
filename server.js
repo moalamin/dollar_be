@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/charge', (req, res) => {
-    var token = request.body.stripeToken; // Using Express
+    var token = req.body.stripeToken; // Using Express
     // Charge the user's card:
     stripe.charges.create({
       amount: 100,
