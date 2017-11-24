@@ -8,7 +8,7 @@ const PORT = (process.env.PORT || 3500);
 var stripe = require('stripe')(config.STRIPE_TEST_KEY);
 
 //cors options
-var whitelist = ['http://localhost:3000', 'ec2-34-216-18-186.us-west-2.compute.amazonaws.com']
+var whitelist = ['http://localhost:3000', 'ec2-34-216-18-186.us-west-2.compute.amazonaws.com', 'http://localhost:3500']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
     res.send('Use /api for making requests to Dellar API');
 });
 
-app.post('/api/charge', (req, res) => {
+app.post('/api/charge', (req, res, next) => {
     var token = req.body.stripeToken; // Using Express
     // Charge the user's card:
     stripe.charges.create({
@@ -40,7 +40,7 @@ app.post('/api/charge', (req, res) => {
       source: token,
     }, function(err, charge) {
       if (err) {
-        next(error)
+        next(err)
       } else {
         res.json(charge);
       }
