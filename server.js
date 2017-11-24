@@ -5,11 +5,8 @@ const PORT = (process.env.PORT || 3500);
 
 app.use(morgan('combined'))
 
-app.get('/', (err, req, res, next) => {
-    if (err) {
-        next(error)
-    }
-    res.send({hello: "World"});
+app.get('/', (req, res) => {
+    res.json({"hello": "World"});
 });
 
 app.listen(PORT, ()=> {
