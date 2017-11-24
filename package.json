@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "forever server.js",
-    "start:dev": "nodemon --watch server.js"
+    "start:dev": "forever -w server.js"
   },
   "keywords": [
     "node",
@@ -19,7 +19,8 @@
     "axios": "^0.17.1",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
-    "mongoose": "^4.13.4"
+    "mongoose": "^4.13.4",
+    "stripe": "^5.3.0"
   },
   "devDependencies": {
     "morgan": "^1.9.0"
