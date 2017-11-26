@@ -71,14 +71,12 @@ app.post('/api/charge', (req, res, next) => {
     );
 });
 
-app.post('/api/dollar_count', (req, res, next) => {
+app.get('/api/dollar_count', (req, res, next) => {
      Charge.count(function(err, count){
         if (err) {
             next(err)
         } else {
-            return {
-                res.json({count: count});
-            }
+            res.json({count: count});
         }
      });
 });
