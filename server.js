@@ -1,6 +1,7 @@
 let config = require('./config.js');
 let express = require('express');
 let app = express();
+var mongoose = require('mongoose');
 let cors = require('cors');
 let bodyParser = require('body-parser');
 let morgan = require('morgan');
@@ -55,6 +56,11 @@ app.post('/api/charge', (req, res, next) => {
     );
 });
 
-app.listen(PORT, () => {
-    console.log('App is now running on port: ' + PORT);
+mongoose.connect(config.MONGO_DB_ENPOINT, function(err) {
+    if (err) {
+        throw err;
+    }
+    app.listen(PORT, () => {
+        console.log('App is now running on port: ' + PORT);
+    });
 });
