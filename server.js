@@ -7,6 +7,7 @@ let bodyParser = require('body-parser');
 let morgan = require('morgan');
 const PORT = process.env.PORT || 3500;
 var stripe = require('stripe')(config.STRIPE_TEST_KEY);
+var Charge = require('./models/Charge.js');
 
 //cors options
 // var whitelist = [
@@ -43,14 +44,28 @@ app.post('/api/charge', (req, res, next) => {
         {
             amount: 100,
             currency: 'usd',
-            description: 'Someone waster a dollar.',
+            description: 'Someone wasted a dollar.',
             source: token
         },
         function(err, charge) {
             if (err) {
-                next(err);
+                res.json(err);
             } else {
-                res.json(charge);
+                let newCharge = new Charge({
+                    chargeId: charge.id,
+                    amount: charge.amount,
+                    source: charge.source,
+                    description: charge.description,
+                    paid: charge.paid
+                })
+                newCharge.save(function(err, savedCharge) {
+                    if (err) {
+                        next(err)
+                    } else {
+                        console.dir(savedCharge)
+                        res.json(charge);
+                    }
+                })
             }
         }
     );
