@@ -71,6 +71,18 @@ app.post('/api/charge', (req, res, next) => {
     );
 });
 
+app.post('/api/dollar_count', (req, res, next) => {
+     Charge.count(function(err, count){
+        if (err) {
+            next(err)
+        } else {
+            return {
+                res.json({count: count});
+            }
+        }
+     });
+});
+
 mongoose.connect(config.MONGO_DB_ENPOINT, function(err) {
     if (err) {
         throw err;
