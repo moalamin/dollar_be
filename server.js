@@ -1,6 +1,8 @@
 let config = require('./config.js');
 let express = require('express');
 let app = express();
+var server = require('http').Server(app);
+let io = require('socket.io')(server);
 var mongoose = require('mongoose');
 let cors = require('cors');
 let bodyParser = require('body-parser');
@@ -71,6 +73,13 @@ app.post('/api/charge', (req, res, next) => {
     );
 });
 
+io.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});
+
 app.get('/api/dollar_count', (req, res, next) => {
      Charge.count(function(err, count){
         if (err) {
@@ -85,7 +94,7 @@ mongoose.connect(config.MONGO_DB_ENPOINT, function(err) {
     if (err) {
         throw err;
     }
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
         console.log('App is now running on port: ' + PORT);
     });
 });
