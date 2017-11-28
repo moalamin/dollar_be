@@ -97,7 +97,7 @@ app.get('/api/dollar_count', (req, res, next) => {
 		if (err) {
 			next(err);
 		} else {
-			res.json({ count: count });
+			res.json({count});
 		}
 	});
 });
